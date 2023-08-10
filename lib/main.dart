@@ -12,7 +12,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Epic Fitness',
+      title: 'Oeber',
       theme: ThemeData(
         brightness: Brightness.dark,
         colorSchemeSeed: const Color(0xFF7DDCB4),
