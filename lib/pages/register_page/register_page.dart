@@ -1,29 +1,48 @@
 import 'package:flutter/material.dart';
-import 'package:oeber/methods/validation_methods.dart';
-import 'package:oeber/pages/forgot_password_page/forgot_password_page.dart';
-import 'package:oeber/pages/register_page/register_page.dart';
-import 'package:oeber/widgets/input_password_textfield.dart';
-import 'package:oeber/widgets/input_textfield_decoration.dart';
+import 'package:oeber/pages/login_page/login_page.dart';
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
+import '../../methods/validation_methods.dart';
+import '../../widgets/input_password_textfield.dart';
+import '../../widgets/input_textfield_decoration.dart';
+
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  State<LoginScreen> createState() => _LoginScreenState();
+  State<RegisterScreen> createState() => _RegisterScreenState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _RegisterScreenState extends State<RegisterScreen> {
   TextEditingController emailController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
   //------------------------------Widget Rendering------------------------------\\
+  Widget renderBackArrow() {
+    return Padding(
+      padding: const EdgeInsets.only(top: 60.0, left: 16),
+      child: Row(
+        children: [
+          GestureDetector(
+            child: const Icon(
+              Icons.arrow_back,
+              size: 40,
+              color: Colors.white,
+            ),
+            onTap: () => Navigator.pop(context),
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget renderLogo() {
     return const Padding(
       padding:
-          EdgeInsets.only(top: 40.0, left: 50.0, right: 50.0, bottom: 40.0),
+          EdgeInsets.only(top: 50.0, left: 50.0, right: 50.0, bottom: 40.0),
       child: Image(
         image: AssetImage(
-          'assets/images/oeber_logo.png',
+          'assets/images/PMN_Logo_New.png',
         ),
       ),
     );
@@ -44,8 +63,7 @@ class _LoginScreenState extends State<LoginScreen> {
       child: Column(
         children: [
           Padding(
-            padding: const EdgeInsets.only(
-                top: 30.0, left: 40.0, right: 40.0, bottom: 10.0),
+            padding: const EdgeInsets.only(top: 30.0, left: 40.0, right: 40.0),
             child: TextFormField(
               decoration: textfieldDecoration(
                 const Icon(
@@ -54,12 +72,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 "Email",
               ),
-              validator: (email) => emailValidator(email),
               controller: emailController,
+              validator: (email) => emailValidator(email),
             ),
           ),
           Padding(
-            padding: const EdgeInsets.only(top: 10.0, left: 40.0, right: 40.0),
+            padding: const EdgeInsets.only(top: 20.0, left: 40.0, right: 40.0),
             child: InputPasswordTextField(
               "Password",
               const Icon(
@@ -69,37 +87,26 @@ class _LoginScreenState extends State<LoginScreen> {
               passwordController,
             ),
           ),
+          Padding(
+            padding: const EdgeInsets.only(top: 20.0, left: 40.0, right: 40.0),
+            child: InputPasswordTextField(
+              "Re-enter Password",
+              const Icon(
+                Icons.lock,
+                size: 30,
+              ),
+              confirmPasswordController,
+            ),
+          ),
         ],
       ),
     );
   }
 
-  Widget renderForgotPassword() {
-    return GestureDetector(
-      onTap: () => Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const ForgotPasswordScreen(),
-        ),
-      ),
-      child: const Padding(
-        padding: EdgeInsets.only(top: 50.0, left: 40.0, right: 40.0),
-        child: Text(
-          "Forgot Password?",
-          style: TextStyle(
-            fontSize: 19,
-            fontWeight: FontWeight.w600,
-            //color: primaryColour,
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget renderLoginButton() {
+  Widget renderSignUpButton() {
     return Padding(
       padding: const EdgeInsets.only(
-        top: 40.0,
+        top: 80.0,
         left: 40.0,
         right: 40.0,
       ),
@@ -108,10 +115,10 @@ class _LoginScreenState extends State<LoginScreen> {
             minimumSize: const Size.fromHeight(50),
             shape: const StadiumBorder()),
         onPressed: () {
-          // signIn();
+          // signUp();
         },
         child: const Text(
-          'Log in',
+          'Create Account',
           style: TextStyle(fontSize: 24),
         ),
       ),
@@ -120,12 +127,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   Widget renderSignUpText() {
     return Padding(
-      padding: const EdgeInsets.only(top: 95.0, left: 8.0, right: 8.0),
+      padding: const EdgeInsets.only(top: 50.0, left: 8.0, right: 8.0),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           const Text(
-            "Don't have an account?",
+            "Already have an account?",
             style: TextStyle(
               fontSize: 19,
             ),
@@ -135,11 +142,11 @@ class _LoginScreenState extends State<LoginScreen> {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const RegisterScreen(),
+                    builder: (context) => const LoginScreen(),
                   ));
             },
             child: const Text(
-              " SIGN UP",
+              " SIGN IN",
               style: TextStyle(
                 fontSize: 19,
                 fontWeight: FontWeight.bold,
@@ -153,9 +160,9 @@ class _LoginScreenState extends State<LoginScreen> {
   }
   //-------------------------------------------------------------------------\\
 
-  //------------------------------Functionality------------------------------\\
+//------------------------------Functionality------------------------------\\
 
-  //TODO: insert sign in
+  //TODO: insert sign up method
 
   //-------------------------------------------------------------------------\\
 
@@ -165,13 +172,13 @@ class _LoginScreenState extends State<LoginScreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
+            renderBackArrow(),
             renderLogo(),
             Column(
               children: [
-                renderHeader("Log in to your account"),
+                renderHeader("Create account"),
                 renderInputArea(),
-                renderForgotPassword(),
-                renderLoginButton(),
+                renderSignUpButton(),
                 renderSignUpText(),
               ],
             ),
