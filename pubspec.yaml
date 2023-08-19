@@ -17,6 +17,11 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
   flutter_launcher_icons: ^0.13.1
+  flutter_native_splash: ^2.3.2
+
+flutter_native_splash:
+  color: "#171413"
+  image: assets/images/oeber_logo.png
 
 flutter_launcher_icons:
   android: "launcher_icon"
