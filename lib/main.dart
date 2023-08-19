@@ -15,13 +15,8 @@ class MainApp extends StatelessWidget {
       title: 'Oeber',
       theme: ThemeData(
         brightness: Brightness.dark,
-        colorSchemeSeed: const Color(0xFF7DDCB4),
-        scaffoldBackgroundColor: const Color(0xFF181A1f),
-        textTheme: const TextTheme(
-          bodyMedium: TextStyle(
-            fontFamily: 'Meticula',
-          ),
-        ),
+        colorSchemeSeed: const Color.fromARGB(255, 139, 123, 85),
+        scaffoldBackgroundColor: const Color(0xFF171413),
       ),
       home: const LoginScreen(),
     );
