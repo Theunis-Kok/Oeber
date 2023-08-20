@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oeber/pages/home_page/home_page.dart';
 import 'package:oeber/pages/login_page/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 
@@ -26,7 +27,7 @@ class MainApp extends StatelessWidget {
           ),
         ),
       ),
-      home: const LoginScreen(),
+      home: const FollowingPage(),
     );
   }
 }
