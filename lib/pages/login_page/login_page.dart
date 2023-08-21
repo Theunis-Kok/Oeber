@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen>
   Widget loginWithGoogleButton() {
     return ElevatedButton.icon(
       onPressed: () {
-        // Handle Google login here
+        signInWithGoogle(context);
       },
       icon: Image.asset(
         'assets/images/google_logo.png',
@@ -322,7 +322,7 @@ class _LoginScreenState extends State<LoginScreen>
   }
 
   void tryLogin() {
-    signIn(
+    signInWithEmailAndPassword(
       context,
       _emailController.value.text.trim(),
       _passwordController.value.text.trim(),
