@@ -22,14 +22,14 @@ class _CuppucinoDetailsScreenState extends State<CuppucinoDetailsScreen> {
               fit: StackFit.passthrough,
               children: [
                 const ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    bottomLeft: Radius.circular(40),
+                    bottomRight: Radius.circular(40),
+                  ),
                   child: Image(
                     image: NetworkImage(
                       'https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
                     ),
-                  ),
-                  borderRadius: BorderRadius.only(
-                    bottomLeft: Radius.circular(40),
-                    bottomRight: Radius.circular(40),
                   ),
                 ),
                 Column(
@@ -61,7 +61,7 @@ class _CuppucinoDetailsScreenState extends State<CuppucinoDetailsScreen> {
                                       ),
                                       Padding(
                                         padding:
-                                            EdgeInsets.symmetric(vertical: 4.0),
+                                            const EdgeInsets.symmetric(vertical: 4.0),
                                         child: Text(
                                           'With Cream',
                                           style: TextStyle(

@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:oeber/pages/home_page/home_page.dart';
 import 'package:oeber/pages/login_page/login_page.dart';
 import 'package:oeber/widgets/loader.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -29,23 +30,8 @@ Future<void> signInWithEmailAndPassword(
     )
         .then((value) {
       LoaderOverlay.hide();
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Success"),
-            content: const Text("Login successful"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const FollowingPage()));
     });
   } on FirebaseAuthException catch (e) {
     print(e);
@@ -62,23 +48,8 @@ Future<void> signInWithCredentials(
     LoaderOverlay.show(context, null);
     await FirebaseAuth.instance.signInWithCredential(credential).then((value) {
       LoaderOverlay.hide();
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Success"),
-            content: const Text("Login successful"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const FollowingPage()));
     });
   } on FirebaseAuthException catch (e) {
     print(e);
@@ -98,23 +69,8 @@ Future<void> register(
     )
         .then((value) {
       LoaderOverlay.hide();
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Success"),
-            content: const Text("Login successful"),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
+      Navigator.pushReplacement(context,
+          MaterialPageRoute(builder: (context) => const FollowingPage()));
     });
   } on FirebaseAuthException catch (e) {
     print(e);
@@ -137,8 +93,7 @@ Widget checkAuthStatus(BuildContext context) {
           return const LoginScreen();
         } else if (snapshot.hasData) {
           print("Curent user info: ${getUser()}");
-          //TODO insert homepage
-          return const LoginScreen();
+          return const FollowingPage();
         } else {
           return const LoginScreen();
         }

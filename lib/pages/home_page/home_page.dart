@@ -321,7 +321,7 @@ class _FollowingPageState extends State<FollowingPage> {
   }
 
   Widget renderFeaturedTitle() {
-    return Container(
+    return SizedBox(
       height: 50,
       child: ListView.builder(
           scrollDirection: Axis.horizontal,
@@ -382,7 +382,7 @@ class _FollowingPageState extends State<FollowingPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color.fromRGBO(235, 219, 204, 120),
+      backgroundColor: const Color.fromRGBO(235, 219, 204, 120),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: SingleChildScrollView(
