@@ -30,8 +30,8 @@ Future<void> signInWithEmailAndPassword(
     )
         .then((value) {
       LoaderOverlay.hide();
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const FollowingPage()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
     });
   } on FirebaseAuthException catch (e) {
     print(e);
@@ -48,8 +48,8 @@ Future<void> signInWithCredentials(
     LoaderOverlay.show(context, null);
     await FirebaseAuth.instance.signInWithCredential(credential).then((value) {
       LoaderOverlay.hide();
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const FollowingPage()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
     });
   } on FirebaseAuthException catch (e) {
     print(e);
@@ -69,8 +69,8 @@ Future<void> register(
     )
         .then((value) {
       LoaderOverlay.hide();
-      Navigator.pushReplacement(context,
-          MaterialPageRoute(builder: (context) => const FollowingPage()));
+      Navigator.pushReplacement(
+          context, MaterialPageRoute(builder: (context) => const HomePage()));
     });
   } on FirebaseAuthException catch (e) {
     print(e);
@@ -92,8 +92,7 @@ Widget checkAuthStatus(BuildContext context) {
           print("Something went wrong:");
           return const LoginScreen();
         } else if (snapshot.hasData) {
-          print("Curent user info: ${getUser()}");
-          return const FollowingPage();
+          return const HomePage();
         } else {
           return const LoginScreen();
         }

@@ -1,101 +1,99 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:oeber/pages/coffee_pages/cuppucino_detail.dart';
+import 'package:oeber/providers/product.dart';
+import 'package:oeber/themes/theme_data.dart';
 import 'package:oeber/util/coffee_type.dart';
+import 'package:oeber/widgets/product_item.dart';
 
 import '../../widgets/input_textfield_decoration.dart';
 
-class FollowingPage extends StatefulWidget {
-  const FollowingPage({Key? key}) : super(key: key);
+class HomePage extends StatefulWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
-  _FollowingPageState createState() => _FollowingPageState();
+  _HomePageState createState() => _HomePageState();
 }
 
-class _FollowingPageState extends State<FollowingPage> {
+class _HomePageState extends State<HomePage> {
   TextEditingController searchController = TextEditingController();
+  List<String> notifications = ["Alert"];
+  List<Product> products = [];
 
 //------------------------------Widget Rendering------------------------------\\
   Widget renderHeaderSection() {
-    return Padding(
-      padding: const EdgeInsets.only(top: 50.0),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Row(
-            children: [
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                    child: GestureDetector(
-                      // onTap: () => Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(
-                      //     builder: (context) => const ProfileHomeScreen(),
-                      //   ),
-                      // ),
-                      child: const CircleAvatar(
-                        radius: 35,
-                        backgroundImage: NetworkImage(
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiYXE8Ek1M_tOGkdTGsgLwLQe3UPdBMGcfYg&usqp=CAU"),
-                      ),
+    return Row(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            Column(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                  child: GestureDetector(
+                    child: const CircleAvatar(
+                      radius: 35,
+                      backgroundImage: NetworkImage(
+                          "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiYXE8Ek1M_tOGkdTGsgLwLQe3UPdBMGcfYg&usqp=CAU"),
                     ),
-                  ),
-                ],
-              ),
-              const Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Good Evening 👋",
-                    style: TextStyle(
-                      fontSize: 19,
-                    ),
-                  ),
-                  Text(
-                    "John Doe",
-                    style: TextStyle(
-                      fontSize: 25,
-                      fontWeight: FontWeight.w700,
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Container(
-                  width: 45,
-                  height: 45,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    border: Border.all(
-                      //color: primaryColour,
-                      width: 2.0,
-                    ),
-                  ),
-                  child: const Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      CircleAvatar(
-                        child: Icon(
-                          Icons.notifications,
-                          color: Color.fromARGB(255, 97, 97, 97),
-                        ),
-                      ),
-                    ],
                   ),
                 ),
+              ],
+            ),
+            Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  greeting(),
+                  style: defaultTextStyle(),
+                ),
+                Text(
+                  FirebaseAuth.instance.currentUser!.displayName ?? "",
+                  style: const TextStyle(
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
+        Column(children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Container(
+              width: 45,
+              height: 45,
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Stack(
+                    alignment: Alignment.topRight,
+                    children: [
+                      const Icon(
+                        Icons.notifications,
+                        color: Color.fromARGB(255, 97, 97, 97),
+                        size: 30,
+                      ),
+                      if (notifications.isNotEmpty)
+                        Container(
+                          width: 10,
+                          height: 10,
+                          decoration: const BoxDecoration(
+                            color: Colors.orange,
+                            shape: BoxShape.circle,
+                          ),
+                        ),
+                    ],
+                  ),
+                ],
               ),
-            ],
-          )
-        ],
-      ),
+            ),
+          ),
+        ])
+      ],
     );
   }
 
@@ -103,202 +101,8 @@ class _FollowingPageState extends State<FollowingPage> {
     return SingleChildScrollView(
       scrollDirection: Axis.horizontal,
       child: Row(
-        children: [
-          Container(
-            margin: const EdgeInsets.all(10),
-            height: 345, //345
-            width: 250, //width 300
-            padding: const EdgeInsets.all(20), //20
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), //10
-              color: const Color(0xFF1F222A),
-            ),
-            child: Column(
-              children: [
-                const ClipRRect(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                  child: Image(
-                    image: NetworkImage(
-                      'https://images.pexels.com/photos/2396220/pexels-photo-2396220.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500',
-                    ),
-                    height: 200,
-                    width: 400, //400
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Cuppucino',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            'With Cream',
-                            style: TextStyle(
-                                //color: primaryColour,
-                                ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'R 30.00',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        const CuppucinoDetailsScreen(),
-                                  ));
-                            },
-                            child: Column(
-                              children: [
-                                Container(
-                                  decoration: BoxDecoration(
-                                      color: Colors.orange,
-                                      borderRadius: BorderRadius.circular(6)),
-                                  child: const Icon(
-                                    Icons.add,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-          Container(
-            margin: const EdgeInsets.all(10),
-            height: 345,
-            width: 250, //width 300
-            padding: const EdgeInsets.all(20), //20
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(20), //10
-              color: const Color(0xFF1F222A),
-            ),
-            child: Column(
-              children: [
-                const ClipRRect(
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(16.0),
-                  ),
-                  child: Image(
-                    image: NetworkImage(
-                      'https://media.cnn.com/api/v1/images/stellar/prod/150929101049-black-coffee-stock.jpg?q=x_3,y_1231,h_1684,w_2993,c_crop/h_720,w_1280',
-                    ),
-                    height: 200,
-                    width: 400,
-                    fit: BoxFit.fill,
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text(
-                        'Black coffee',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      const Row(
-                        children: [
-                          Text(
-                            'No Milk',
-                            style: TextStyle(),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 8.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          const Column(
-                            children: [
-                              Row(
-                                children: [
-                                  SizedBox(
-                                    width: 3,
-                                  ),
-                                  Text(
-                                    'R 32.00',
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                          Column(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                    color: Colors.orange,
-                                    borderRadius: BorderRadius.circular(6)),
-                                child: const Icon(
-                                  Icons.add,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                )
-              ],
-            ),
-          ),
-        ],
+        children:
+            products.map((product) => ProductCard(product: product)).toList(),
       ),
     );
   }
@@ -330,9 +134,7 @@ class _FollowingPageState extends State<FollowingPage> {
             return CoffeeType(
               coffeeType: coffeeType[index][0],
               isSelected: coffeeType[index][1],
-              onTap: () {
-                coffeeTypeSelected(index);
-              },
+              onTap: () => coffeeTypeSelected(index),
             );
           }),
     );
@@ -360,8 +162,57 @@ class _FollowingPageState extends State<FollowingPage> {
 
 //-----------------------------Functionality--------------------------------\\
 
+  @override
+  void initState() {
+    super.initState();
+    Product product1 = Product(
+      photoUrl:
+          "https://consumerfiles.com/wp-content/uploads/2021/07/Is-Drinking-Espresso-Good-or-Bad-for-You-11-Health-Benefits-Espresso-Consumer-Files.webp",
+      id: 1,
+      name: 'Product 1',
+      description: 'Description of Product 1',
+      price: 10.99,
+      rating: 4.4,
+    );
+
+    Product product2 = Product(
+      photoUrl:
+          "https://consumerfiles.com/wp-content/uploads/2021/07/Is-Drinking-Espresso-Good-or-Bad-for-You-11-Health-Benefits-Espresso-Consumer-Files.webp",
+      id: 2,
+      name: 'Product 2',
+      description: 'Description of Product 2',
+      price: 19.99,
+      rating: 4.6,
+    );
+    Product product3 = Product(
+      photoUrl:
+          "https://consumerfiles.com/wp-content/uploads/2021/07/Is-Drinking-Espresso-Good-or-Bad-for-You-11-Health-Benefits-Espresso-Consumer-Files.webp",
+      id: 3,
+      name: 'Product 3',
+      description: 'Description of Product 3',
+      price: 10.99,
+      rating: 4.4,
+    );
+
+    Product product4 = Product(
+      photoUrl:
+          "https://consumerfiles.com/wp-content/uploads/2021/07/Is-Drinking-Espresso-Good-or-Bad-for-You-11-Health-Benefits-Espresso-Consumer-Files.webp",
+      id: 4,
+      name: 'Product 4',
+      description: 'Description of Product 4',
+      price: 19.99,
+      rating: 4.3,
+    );
+
+    products.add(product1);
+    products.add(product2);
+    products.add(product3);
+    products.add(product4);
+  }
+
   final List coffeeType = [
-    ['Cuppucino', true],
+    ['All', true],
+    ['Cuppucino', false],
     ['Espresso', false],
     ['Latte', false],
     ['Flat White', false],
@@ -377,23 +228,37 @@ class _FollowingPageState extends State<FollowingPage> {
     });
   }
 
+  String greeting() {
+    final currentTime = DateTime.now();
+
+    if (currentTime.hour >= 0 && currentTime.hour < 12) {
+      return "Good Morning";
+    } else if (currentTime.hour >= 12 && currentTime.hour < 18) {
+      return "Good Afternoon";
+    } else {
+      return "Good Evening";
+    }
+  }
+
 //--------------------------------------------------------------------------\\
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: const Color.fromRGBO(235, 219, 204, 120),
-      body: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              renderHeaderSection(),
-              renderSearchBar(),
-              renderFeaturedTitle(),
-              renderFeaturedCoffee(),
-              renderSpecialsTitle(),
-            ],
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: mainBackgroundColour,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                renderHeaderSection(),
+                renderSearchBar(),
+                renderFeaturedTitle(),
+                renderFeaturedCoffee(),
+                renderSpecialsTitle(),
+              ],
+            ),
           ),
         ),
       ),
