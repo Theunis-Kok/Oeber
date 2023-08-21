@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:oeber/methods/auth_methods.dart';
+import 'package:oeber/pages/login_page/login_page.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'package:oeber/themes/theme_data.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -17,8 +16,17 @@ class MainApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Oeber',
-      theme: mainTheme(),
-      home: checkAuthStatus(context),
+      theme: ThemeData(
+        brightness: Brightness.dark,
+        colorSchemeSeed: const Color(0xFF7DDCB4),
+        scaffoldBackgroundColor: const Color.fromRGBO(197, 180, 134, 100),
+        textTheme: const TextTheme(
+          bodyMedium: TextStyle(
+            fontFamily: 'Meticula',
+          ),
+        ),
+      ),
+      home: const LoginScreen(),
     );
   }
 }

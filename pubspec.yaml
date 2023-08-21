@@ -10,6 +10,10 @@ dependencies:
   firebase_core: ^2.15.0
   firebase_auth: ^4.7.3
   email_validator: ^2.0.1
+  get: ^4.6.1
+  google_fonts: ^2.3.2
+  expandable_text: ^2.3.0
+  badges: ^2.0.2
   google_sign_in: ^6.1.4
   lottie: ^2.6.0
   flutter:
