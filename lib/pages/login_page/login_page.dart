@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:oeber/methods/auth_methods.dart';
+import 'package:oeber/methods/validation_methods.dart';
+import 'package:oeber/themes/theme_data.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -9,10 +12,12 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen>
     with SingleTickerProviderStateMixin {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmPasswordController = TextEditingController();
-  bool isPasswordVisible = false;
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController =
+      TextEditingController();
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  bool _isPasswordVisible = false;
 
   //------------------------------Widget Rendering------------------------------\\
 
@@ -39,9 +44,9 @@ class _LoginScreenState extends State<LoginScreen>
         height: 40,
         width: 40,
       ),
-      label: const Text(
+      label: Text(
         'Login with Google',
-        style: TextStyle(color: Colors.white, fontSize: 18),
+        style: defaultTextStyle(),
       ),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(
@@ -67,9 +72,9 @@ class _LoginScreenState extends State<LoginScreen>
         height: 40,
         width: 40,
       ),
-      label: const Text(
+      label: Text(
         'Register with Google',
-        style: TextStyle(color: Colors.white, fontSize: 18),
+        style: defaultTextStyle(),
       ),
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(
@@ -87,9 +92,6 @@ class _LoginScreenState extends State<LoginScreen>
 
   Widget loginButton() {
     return ElevatedButton(
-      onPressed: () {
-        tryLogin();
-      },
       style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(
           const Color(0xFF605a57),
@@ -106,6 +108,9 @@ class _LoginScreenState extends State<LoginScreen>
         'Login',
         style: TextStyle(color: Colors.white, fontSize: 19),
       ),
+      onPressed: () {
+        tryLogin();
+      },
     );
   }
 
@@ -164,11 +169,12 @@ class _LoginScreenState extends State<LoginScreen>
   Widget emailTextField() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: TextField(
-        controller: emailController,
-        style: const TextStyle(color: Colors.white, fontSize: 18),
+      child: TextFormField(
+        validator: (email) => emailValidator(email),
+        controller: _emailController,
+        style: defaultTextStyle(),
         decoration: InputDecoration(
-          hintStyle: const TextStyle(color: Colors.white, fontSize: 18),
+          hintStyle: defaultTextStyle(),
           filled: false,
           hintText: 'Email',
           prefixIcon: const Icon(Icons.email),
@@ -184,18 +190,19 @@ class _LoginScreenState extends State<LoginScreen>
   Widget passwordTextField() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: TextField(
-        obscureText: !isPasswordVisible,
-        controller: passwordController,
-        style: const TextStyle(color: Colors.white, fontSize: 18),
+      child: TextFormField(
+        validator: (password) => passwordValidator(password),
+        obscureText: !_isPasswordVisible,
+        controller: _passwordController,
+        style: defaultTextStyle(),
         decoration: InputDecoration(
-          hintStyle: const TextStyle(color: Colors.white, fontSize: 18),
+          hintStyle: defaultTextStyle(),
           filled: false,
           hintText: 'Password',
           prefixIcon: const Icon(Icons.lock),
           suffixIcon: IconButton(
             icon: Icon(
-              isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+              _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
               color: Colors.grey,
             ),
             onPressed: () => togglePasswordVisibility(),
@@ -212,18 +219,20 @@ class _LoginScreenState extends State<LoginScreen>
   Widget confirmPasswordTextField() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
-      child: TextField(
-        obscureText: !isPasswordVisible,
-        controller: confirmPasswordController,
-        style: const TextStyle(color: Colors.white, fontSize: 18),
+      child: TextFormField(
+        validator: (confirmPassword) => confirmPasswordValidator(
+            _passwordController.value.text, confirmPassword),
+        obscureText: !_isPasswordVisible,
+        controller: _confirmPasswordController,
+        style: defaultTextStyle(),
         decoration: InputDecoration(
-          hintStyle: const TextStyle(color: Colors.white, fontSize: 18),
+          hintStyle: defaultTextStyle(),
           filled: false,
           hintText: 'Confirm Password',
           prefixIcon: const Icon(Icons.lock),
           suffixIcon: IconButton(
             icon: Icon(
-              isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+              _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
               color: Colors.grey,
             ),
             onPressed: () => togglePasswordVisibility(),
@@ -277,6 +286,7 @@ class _LoginScreenState extends State<LoginScreen>
                         loginWithGoogleButton(),
                         const SizedBox(height: 20),
                         dividerWithText("or"),
+                        const SizedBox(height: 20),
                         emailTextField(),
                         passwordTextField(),
                         loginButton(),
@@ -308,90 +318,23 @@ class _LoginScreenState extends State<LoginScreen>
   //------------------------------Functionality------------------------------\\
 
   void togglePasswordVisibility() {
-    setState(() {
-      isPasswordVisible = !isPasswordVisible;
-    });
-  }
-
-  bool areFieldsFilledLogin() {
-    return emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty;
-  }
-
-  bool areFieldsFilledRegister() {
-    return emailController.text.isNotEmpty &&
-        passwordController.text.isNotEmpty &&
-        confirmPasswordController.text.isNotEmpty;
-  }
-
-  bool isPasswordMatch() {
-    return passwordController.text == confirmPasswordController.text;
+    setState(() => _isPasswordVisible = !_isPasswordVisible);
   }
 
   void tryLogin() {
-    if (!areFieldsFilledLogin()) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Missing Information"),
-            content: const Text("Please fill out all the required fields."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // Handle successful login
-    }
+    signIn(
+      context,
+      _emailController.value.text.trim(),
+      _passwordController.value.text.trim(),
+    );
   }
 
   void tryRegister() {
-    if (!areFieldsFilledRegister()) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Missing Information"),
-            content: const Text("Please fill out all the required fields."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
-    } else if (!isPasswordMatch()) {
-      showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return AlertDialog(
-            title: const Text("Password Mismatch"),
-            content: const Text("Passwords do not match. Please try again."),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                child: const Text("OK"),
-              ),
-            ],
-          );
-        },
-      );
-    } else {
-      // Handle successful registration
-    }
+    register(
+      context,
+      _emailController.value.text.trim(),
+      _passwordController.value.text.trim(),
+    );
   }
 
   //-------------------------------------------------------------------------\\
@@ -399,8 +342,8 @@ class _LoginScreenState extends State<LoginScreen>
   @override
   void dispose() {
     super.dispose();
-    emailController.dispose();
-    passwordController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
   }
 
   @override
