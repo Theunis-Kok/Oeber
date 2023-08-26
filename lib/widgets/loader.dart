@@ -35,9 +35,9 @@ class LoaderOverlay {
                 mainAxisSize: MainAxisSize.min,
                 children: [
                   Lottie.asset(
-                    'assets/lotties/loading_animation.json',
-                    width: 150,
-                    height: 150,
+                    'assets/lotties/test_animation.json',
+                    width: 600,
+                    height: 600,
                   ),
                   Padding(
                     padding: const EdgeInsets.all(8.0),
