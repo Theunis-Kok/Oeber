@@ -188,6 +188,26 @@ class _HomePageState extends State<HomePage> {
       price: 19.99,
       rating: 4.6,
     );
+
+    Product product5 = Product(
+      photoUrl:
+          "https://consumerfiles.com/wp-content/uploads/2021/07/Is-Drinking-Espresso-Good-or-Bad-for-You-11-Health-Benefits-Espresso-Consumer-Files.webp",
+      id: 5,
+      name: 'Product 2',
+      description: 'Description of Product 2',
+      price: 19.99,
+      rating: 4.6,
+    );
+
+    Product product6 = Product(
+      photoUrl:
+          "https://consumerfiles.com/wp-content/uploads/2021/07/Is-Drinking-Espresso-Good-or-Bad-for-You-11-Health-Benefits-Espresso-Consumer-Files.webp",
+      id: 6,
+      name: 'Product 2',
+      description: 'Description of Product 2',
+      price: 19.99,
+      rating: 4.6,
+    );
     Product product3 = Product(
       photoUrl:
           "https://consumerfiles.com/wp-content/uploads/2021/07/Is-Drinking-Espresso-Good-or-Bad-for-You-11-Health-Benefits-Espresso-Consumer-Files.webp",
@@ -212,6 +232,8 @@ class _HomePageState extends State<HomePage> {
     products.add(product2);
     products.add(product3);
     products.add(product4);
+    products.add(product5);
+    products.add(product6);
   }
 
   final List coffeeType = [

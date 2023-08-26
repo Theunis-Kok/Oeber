@@ -63,7 +63,10 @@ class DefaultDialog extends StatelessWidget {
             padding: const EdgeInsets.only(left: 20.0, right: 20.0),
             child: Text(
               body,
-              style: const TextStyle(fontSize: 18.0),
+              style: const TextStyle(
+                fontSize: 17.0,
+                fontWeight: FontWeight.w400,
+              ),
             ),
           ),
           const SizedBox(height: 15.0),
