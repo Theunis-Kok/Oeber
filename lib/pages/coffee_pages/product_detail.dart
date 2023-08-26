@@ -195,11 +195,11 @@ class _ProductDetailState extends State<ProductDetail> {
                         fontSize: 18,
                       ),
                     ),
-                    const Padding(
-                      padding: EdgeInsets.only(top: 8.0, bottom: 8.0),
+                    Padding(
+                      padding: const EdgeInsets.only(top: 8.0, bottom: 8.0),
                       child: Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
-                        style: TextStyle(
+                        widget.product.detailedDescription,
+                        style: const TextStyle(
                           color: Colors.white,
                           fontSize: 19,
                         ),

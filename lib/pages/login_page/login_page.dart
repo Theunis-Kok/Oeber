@@ -248,7 +248,7 @@ class _LoginScreenState extends State<LoginScreen>
 
   Widget renderContainer() {
     return Container(
-      height: MediaQuery.of(context).size.height * 0.5,
+      height: MediaQuery.of(context).size.height * 0.6,
       decoration: const BoxDecoration(
         color: Color(0xFF605a57),
         borderRadius: BorderRadius.only(

@@ -42,4 +42,6 @@ flutter:
     - assets/images/oeber_logo.png
     - assets/images/google_logo.png
     - assets/lotties/loading_animation.json
+    - assets/lotties/test_animation.json
+    
 

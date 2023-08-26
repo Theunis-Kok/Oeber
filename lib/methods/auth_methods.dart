@@ -107,6 +107,8 @@ void signOut(BuildContext context) async {
   try {
     LoaderOverlay.show(context, null);
     await FirebaseAuth.instance.signOut();
+    Navigator.pushReplacement(
+        context, MaterialPageRoute(builder: (context) => const LoginScreen()));
   } on FirebaseAuthException catch (e) {
     print(e);
   } finally {

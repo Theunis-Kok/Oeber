@@ -5,6 +5,8 @@ class Product {
   final String description;
   final double price;
   final double rating;
+  final String type;
+  final String detailedDescription;
 
   Product({
     required this.id,
@@ -13,5 +15,7 @@ class Product {
     required this.description,
     required this.price,
     required this.rating,
+    required this.type,
+    required this.detailedDescription,
   });
 }
