@@ -1,5 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:oeber/pages/cart_page/cart_page.dart';
 import 'package:oeber/providers/product.dart';
 import 'package:oeber/themes/theme_data.dart';
 import 'package:oeber/util/coffee_type.dart';
@@ -62,7 +63,7 @@ class _HomePageState extends State<HomePage> {
         Column(children: [
           Padding(
             padding: const EdgeInsets.all(16.0),
-            child: Container(
+            child: SizedBox(
               width: 45,
               height: 45,
               child: Column(
@@ -72,10 +73,13 @@ class _HomePageState extends State<HomePage> {
                   Stack(
                     alignment: Alignment.topRight,
                     children: [
-                      const Icon(
-                        Icons.notifications,
-                        color: Color.fromARGB(255, 97, 97, 97),
-                        size: 30,
+                      GestureDetector(
+                        onTap: () => viewCartPage(),
+                        child: const Icon(
+                          Icons.shopping_cart,
+                          color: Color.fromARGB(255, 97, 97, 97),
+                          size: 30,
+                        ),
                       ),
                       if (notifications.isNotEmpty)
                         Container(
@@ -238,6 +242,11 @@ class _HomePageState extends State<HomePage> {
     } else {
       return "Good Evening";
     }
+  }
+
+  void viewCartPage() {
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => CartPage(products)));
   }
 
 //--------------------------------------------------------------------------\\
