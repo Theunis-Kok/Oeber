@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:oeber/methods/auth_methods.dart';
+import 'package:oeber/pages/profile_page/card_page.dart';
 import 'package:oeber/widgets/back_arrow.dart';
+import 'package:get/get.dart';
 
 class ProfileHomeScreen extends StatefulWidget {
   const ProfileHomeScreen({super.key});
@@ -68,28 +70,36 @@ class _ProfileHomeScreenState extends State<ProfileHomeScreen> {
   }
 
   Widget renderManagePayments() {
-    return const SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Padding(
-        padding:
-            EdgeInsets.only(top: 10.0, left: 14.0, right: 50.0, bottom: 10.0),
-        child: Row(
-          children: [
-            Icon(Icons.payment),
-            VerticalDivider(
-              width: 22,
-            ),
-            Text(
-              "Payments",
-              style: TextStyle(
-                fontSize: 18,
+    return GestureDetector(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => CardPage()),
+        );
+      },
+      child: const SingleChildScrollView(
+        scrollDirection: Axis.horizontal,
+        child: Padding(
+          padding:
+              EdgeInsets.only(top: 10.0, left: 14.0, right: 50.0, bottom: 10.0),
+          child: Row(
+            children: [
+              Icon(Icons.payment),
+              VerticalDivider(
+                width: 22,
               ),
-            ),
-            VerticalDivider(
-              width: 232,
-            ),
-            Icon(Icons.keyboard_arrow_right)
-          ],
+              Text(
+                "Payments",
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              VerticalDivider(
+                width: 232,
+              ),
+              Icon(Icons.keyboard_arrow_right)
+            ],
+          ),
         ),
       ),
     );
@@ -248,7 +258,6 @@ class _ProfileHomeScreenState extends State<ProfileHomeScreen> {
 
   //-----------------------------Functionality-------------------------------\\
 
-  //TODO: insert log out method
 //-------------------------------------------------------------------------\\
 
   @override
